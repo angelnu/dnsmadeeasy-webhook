@@ -1,6 +1,6 @@
 module github.com/k8s-at-home/dnsmadeeasy-webhook
 
-go 1.16
+go 1.19
 
 require (
 	github.com/cert-manager/cert-manager v1.8.2
