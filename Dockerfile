@@ -32,7 +32,7 @@ RUN  \
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
-FROM gcr.io/distroless/static:nonroot@sha256:9ec950c09380320e203369982691eb821df6a6974edf9f4bb8e661d4b77b9d99
+FROM gcr.io/distroless/static:nonroot@sha256:cacb3d85a593c44e2f3998175164f0c694e475b40e639294f224062842e90724
 WORKDIR /
 COPY --from=build /workspace/src/webhook /app/webhook
 USER nonroot:nonroot
