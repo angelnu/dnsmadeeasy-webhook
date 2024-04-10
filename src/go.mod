@@ -3,7 +3,7 @@ module github.com/angelnu/dnsmadeeasy-webhook
 go 1.19
 
 require (
-	github.com/cert-manager/cert-manager v1.14.3
+	github.com/cert-manager/cert-manager v1.14.4
 	github.com/mhenderson-so/godnsmadeeasy v0.0.0-20161117210134-6c4a59b67887
 	k8s.io/apiextensions-apiserver v0.29.3
 	k8s.io/apimachinery v0.29.3
