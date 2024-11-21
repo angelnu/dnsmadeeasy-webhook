@@ -5,9 +5,9 @@ go 1.19
 require (
 	github.com/cert-manager/cert-manager v1.16.0
 	github.com/mhenderson-so/godnsmadeeasy v0.0.0-20161117210134-6c4a59b67887
-	k8s.io/apiextensions-apiserver v0.31.1
-	k8s.io/apimachinery v0.31.1
-	k8s.io/client-go v0.31.1
+	k8s.io/apiextensions-apiserver v0.31.3
+	k8s.io/apimachinery v0.31.3
+	k8s.io/client-go v0.31.3
 )
 
 require (
