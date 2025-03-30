@@ -4,7 +4,7 @@ This is a cert-manager webhook for the DNSMadeEasy. It is used to get Let´s enc
 
 ## Deploying the webhook
 
-Use the [k8s-at-home helm chart](https://github.com/k8s-at-home/charts/tree/master/charts/dnsmadeeasy-webhook )
+Use the [angelnu helm charts](https://github.com/angelnu/helm-charts/tree/main/charts/apps/dnsmadeeasy-webhook)
 
 ## Building the code
 
