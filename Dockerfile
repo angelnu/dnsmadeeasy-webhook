@@ -7,7 +7,7 @@ ARG TARGETARCH
 
 WORKDIR /workspace
 ENV GO111MODULE=on
-ENV TEST_ASSET_PATH /_out/kubebuilder/bin
+ENV TEST_ASSET_PATH=/_out/kubebuilder/bin
 
 RUN apt update -qq && apt install -qq -y git bash curl g++
 
@@ -45,4 +45,4 @@ USER nonroot:nonroot
 ENTRYPOINT ["/app/webhook"]
 
 ARG IMAGE_SOURCE
-LABEL org.opencontainers.image.source $IMAGE_SOURCE
+LABEL org.opencontainers.image.source=$IMAGE_SOURCE
