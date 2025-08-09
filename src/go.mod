@@ -2,7 +2,7 @@ module github.com/angelnu/dnsmadeeasy-webhook
 
 go 1.24.0
 
-toolchain go1.24.4
+toolchain go1.24.6
 
 require (
 	github.com/cert-manager/cert-manager v1.18.1
