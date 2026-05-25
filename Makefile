@@ -15,18 +15,24 @@ download:
 tidy: download
 	cd src; go mod tidy
 
-# Run tests
-test: fetch_test_binaries
-	echo "Testing with TEST_ZONE_NAME=${TEST_ZONE_NAME}"
-	cd src; \
-	  TEST_ASSET_ETCD=${TEST_ASSET_PATH}/etcd \
-	  TEST_ASSET_KUBE_APISERVER=${TEST_ASSET_PATH}/kube-apiserver \
-	  go test -v .
+.PHONY: test
+test: envtest
+	@echo "Running integration tests..."
+	KUBEBUILDER_ASSETS="$$(GOBIN=$(TEST_ASSET_PATH) $(TEST_ASSET_PATH)/setup-envtest use 1.26.x -p path)" \
+	TEST_ASSET_PATH=$(TEST_ASSET_PATH) \
+	TEST_ASSET_ETCD=$(TEST_ASSET_PATH)/etcd \
+	TEST_ASSET_KUBE_APISERVER=$(TEST_ASSET_PATH)/kube-apiserver \
+	go test -v .
 
-# Fetch binaries used by test
-fetch_test_binaries: _out/kubebuilder/bin/kube-apiserver
-_out/kubebuilder/bin/kube-apiserver:
-	./scripts/fetch-test-binaries.sh
+.PHONY: envtest
+envtest: ## Download setup-envtest and binaries locally if missing
+	@mkdir -p $(TEST_ASSET_PATH)
+	@if [ ! -f $(TEST_ASSET_PATH)/setup-envtest ]; then \
+		echo "Installing setup-envtest utility..."; \
+		GOBIN=$(TEST_ASSET_PATH) go install sigs.k8s.io/controller-runtime/tools/setup-envtest@latest; \
+	fi
+	@echo "Fetching etcd and kube-apiserver binaries..."
+	@GOBIN=$(TEST_ASSET_PATH) $(TEST_ASSET_PATH)/setup-envtest use 1.26.x --bin-dir $(TEST_ASSET_PATH)
 
 
 # Run go fmt against code
