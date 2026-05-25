@@ -16,7 +16,6 @@ COPY Makefile Makefile
 RUN  \
   if [ -n "$TEST_ZONE_NAME" ]; then \
   make envtest; \
-  make test; \
   fi
 
 COPY src src
@@ -30,7 +29,6 @@ RUN cd src; CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o webh
 COPY testdata testdata
 RUN  \
   if [ -n "$TEST_ZONE_NAME" ]; then \
-  make envtest; \
   make test; \
   fi
 
