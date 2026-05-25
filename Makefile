@@ -7,7 +7,7 @@ KUBEBUILDER_ASSETS = $(shell GOBIN=$(TEST_ASSET_PATH) $(TEST_ASSET_PATH)/setup-e
 
 # Build manager binary
 build: fmt vet
-	cd src; go build -o ../bin/webhook main.go
+	cd src; go build -o ../bin/webhook .
 
 # Download dependencies
 download:
