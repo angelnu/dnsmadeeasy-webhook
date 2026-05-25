@@ -1,7 +1,9 @@
 
 # Image URL to use all building/pushing image targets
 IMG ?= dnsmadeeasy-webhook:latest
-TEST_ASSET_PATH=../_out/kubebuilder/bin
+TEST_K8S_VERSION ?= 1.26
+TEST_ASSET_PATH=$(abspath ./_out)
+KUBEBUILDER_ASSETS = $(shell GOBIN=$(TEST_ASSET_PATH) $(TEST_ASSET_PATH)/setup-envtest use $(TEST_K8S_VERSION).x -p path)
 
 # Build manager binary
 build: fmt vet
@@ -18,10 +20,9 @@ tidy: download
 .PHONY: test
 test: envtest
 	@echo "Running integration tests..."
-	KUBEBUILDER_ASSETS="$$(GOBIN=$(TEST_ASSET_PATH) $(TEST_ASSET_PATH)/setup-envtest use 1.26.x -p path)" \
-	TEST_ASSET_PATH=$(TEST_ASSET_PATH) \
-	TEST_ASSET_ETCD=$(TEST_ASSET_PATH)/etcd \
-	TEST_ASSET_KUBE_APISERVER=$(TEST_ASSET_PATH)/kube-apiserver \
+	cd src && \
+	TEST_ASSET_ETCD="$(KUBEBUILDER_ASSETS)/etcd" \
+	TEST_ASSET_KUBE_APISERVER="$(KUBEBUILDER_ASSETS)/kube-apiserver" \
 	go test -v .
 
 .PHONY: envtest
@@ -32,7 +33,7 @@ envtest: ## Download setup-envtest and binaries locally if missing
 		GOBIN=$(TEST_ASSET_PATH) go install sigs.k8s.io/controller-runtime/tools/setup-envtest@latest; \
 	fi
 	@echo "Fetching etcd and kube-apiserver binaries..."
-	@GOBIN=$(TEST_ASSET_PATH) $(TEST_ASSET_PATH)/setup-envtest use 1.26.x --bin-dir $(TEST_ASSET_PATH)
+	@GOBIN=$(TEST_ASSET_PATH) $(TEST_ASSET_PATH)/setup-envtest use $(TEST_K8S_VERSION).x --bin-dir $(TEST_ASSET_PATH)
 
 
 # Run go fmt against code
@@ -53,8 +54,8 @@ docker-push:
 
 # Build the OCI image with Podman
 podman:
-	docker build . -t ${IMG}
+	podman build . -t ${IMG}
 
 # Push the OCI image with Podman
 podman-push:
-	docker push ${IMG}
+	podman push ${IMG}
