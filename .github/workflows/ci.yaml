@@ -2,17 +2,17 @@ name: CI
 
 on:
   workflow_dispatch:
-  # push:
-  #   tags:
-  #   - "v*.*.*"
-  #   branches:
-  #   - "release/*"
+  push:
+    tags:
+    - "v*.*.*"
+    branches:
+    - main
   pull_request:
     types:
     - opened
     - reopened
-  # schedule:
-  # - cron: "0 0 * * 6"
+  schedule:
+  - cron: "0 0 * * 6"
 
 env:
   REGISTRY_IMAGE: ghcr.io/${{ github.repository }}
