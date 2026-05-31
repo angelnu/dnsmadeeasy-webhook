@@ -3,3 +3,7 @@
 bin
 _out
 apiserver.local.config/**
+
+# Stray go-build binary produced by `go build .` in src/ (module-named)
+/src/dnsmadeeasy-webhook
+/src/webhook

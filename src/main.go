@@ -245,7 +245,7 @@ func (c *DNSMadeEasyProviderSolver) getDnsClient(ch *webhookapi.ChallengeRequest
 		if !ok {
 			return nil, fmt.Errorf("no apiKeyRef for %q in secret '%s/%s'", ref.Name, ref.Key, ch.ResourceNamespace)
 		}
-		apiKey = fmt.Sprintf("%s", apiKeyRef)
+		apiKey = string(apiKeyRef)
 	}
 
 	//API Secret
@@ -263,7 +263,7 @@ func (c *DNSMadeEasyProviderSolver) getDnsClient(ch *webhookapi.ChallengeRequest
 		if !ok {
 			return nil, fmt.Errorf("no accessKeySecret for %q in secret '%s/%s'", ref.Name, ref.Key, ch.ResourceNamespace)
 		}
-		apiSecret = fmt.Sprintf("%s", apiSecretRef)
+		apiSecret = string(apiSecretRef)
 	}
 
 	APIUrl := GoDNSMadeEasy.LIVEAPI
@@ -288,19 +288,25 @@ func (c *DNSMadeEasyProviderSolver) getDnsClient(ch *webhookapi.ChallengeRequest
 func getDomainID(client *GoDNSMadeEasy.GoDMEConfig, zone string) (int, error) {
 	domains, err := client.Domains()
 	if err != nil {
-		return -1, fmt.Errorf("dnspod API call failed: %v", err)
+		return -1, fmt.Errorf("DNSMadeEasy API call failed: %v", err)
 	}
 
 	authZone, err := util.FindZoneByFqdn(context.Background(), zone, util.RecursiveNameservers)
 	if err != nil {
 		return -1, err
 	}
+	authZone = util.UnFqdn(authZone)
 
+	// Pick the most specific managed domain that is authZone itself or a parent
+	// of it. Matching on a label boundary ("." + name) avoids false positives
+	// such as "notexample.com" matching a managed "example.com" zone, and the
+	// longest-match keeps nested zones (e.g. "sub.example.com") correct.
 	var hostedDomain GoDNSMadeEasy.Domain
 	for _, domain := range domains {
-		if strings.HasSuffix(util.UnFqdn(authZone), domain.Name) {
-			hostedDomain = domain
-			break
+		if authZone == domain.Name || strings.HasSuffix(authZone, "."+domain.Name) {
+			if len(domain.Name) > len(hostedDomain.Name) {
+				hostedDomain = domain
+			}
 		}
 	}
 
