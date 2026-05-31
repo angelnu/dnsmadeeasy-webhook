@@ -291,8 +291,7 @@ func getDomainID(client *GoDNSMadeEasy.GoDMEConfig, zone string) (int, error) {
 		return -1, fmt.Errorf("dnspod API call failed: %v", err)
 	}
 
-	ctx := context.WithValue(context.Background(), zone, zone)
-	authZone, err := util.FindZoneByFqdn(ctx, zone, util.RecursiveNameservers)
+	authZone, err := util.FindZoneByFqdn(context.Background(), zone, util.RecursiveNameservers)
 	if err != nil {
 		return -1, err
 	}

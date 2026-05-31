@@ -15,7 +15,7 @@ FROM ghcr.io/khumbal/dnsmadeeasy-webhook:latest
 
 ## Deploying the webhook
 
-Use the [k8s-at-home helm chart](https://github.com/k8s-at-home/charts/tree/master/charts/stable/dnsmadeeasy-webhook )
+Use the [angelnu helm charts](https://github.com/angelnu/helm-charts/tree/main/charts/apps/dnsmadeeasy-webhook)
 
 ## Building the code
 
