@@ -2,7 +2,7 @@ module github.com/khumbal/dnsmadeeasy-webhook
 
 go 1.26.0
 
-toolchain go1.26.3
+toolchain go1.26.4
 
 require (
 	github.com/cert-manager/cert-manager v1.20.3
@@ -10,6 +10,19 @@ require (
 	k8s.io/apiextensions-apiserver v0.36.2
 	k8s.io/apimachinery v0.36.2
 	k8s.io/client-go v0.36.2
+)
+
+replace (
+	k8s.io/api => k8s.io/api v0.36.2
+	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.36.2
+	k8s.io/apimachinery => k8s.io/apimachinery v0.36.2
+	k8s.io/apiserver => k8s.io/apiserver v0.36.2
+	k8s.io/client-go => k8s.io/client-go v0.36.2
+	k8s.io/component-base => k8s.io/component-base v0.36.2
+	sigs.k8s.io/controller-runtime => sigs.k8s.io/controller-runtime v0.20.2
+
+	// Crucial: Forces the structured-merge-diff type converter back to v4 signatures
+	sigs.k8s.io/structured-merge-diff/v4 => sigs.k8s.io/structured-merge-diff/v4 v4.4.1
 )
 
 require (
