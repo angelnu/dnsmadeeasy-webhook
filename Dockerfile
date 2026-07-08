@@ -9,7 +9,7 @@ WORKDIR /workspace
 ENV GO111MODULE=on
 ENV TEST_ASSET_PATH=/_out/kubebuilder/bin
 
-RUN apt update -qq && apt install -qq -y git bash curl g++
+RUN apk update && apk add --no-cache git bash curl g++
 
 ARG TEST_ZONE_NAME
 COPY Makefile Makefile
@@ -34,7 +34,7 @@ RUN  \
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
-FROM gcr.io/distroless/static:nonroot@sha256:963fa6c544fe5ce420f1f54fb88b6fb01479f054c8056d0f74cc2c6000df5240
+FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=build /workspace/src/webhook /app/webhook
 USER nonroot:nonroot

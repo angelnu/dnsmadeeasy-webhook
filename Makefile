@@ -23,6 +23,7 @@ test: envtest
 	cd src && \
 	TEST_ASSET_ETCD="$(KUBEBUILDER_ASSETS)/etcd" \
 	TEST_ASSET_KUBE_APISERVER="$(KUBEBUILDER_ASSETS)/kube-apiserver" \
+	TEST_ASSET_KUBECTL="$(KUBEBUILDER_ASSETS)/kubectl" \
 	go test -v .
 
 .PHONY: envtest
