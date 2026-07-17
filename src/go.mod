@@ -19,7 +19,6 @@ replace (
 	k8s.io/apiserver => k8s.io/apiserver v0.36.2
 	k8s.io/client-go => k8s.io/client-go v0.36.2
 	k8s.io/component-base => k8s.io/component-base v0.36.2
-	sigs.k8s.io/controller-runtime => sigs.k8s.io/controller-runtime v0.20.2
 
 	// Crucial: Forces the structured-merge-diff type converter back to v4 signatures
 	sigs.k8s.io/structured-merge-diff/v4 => sigs.k8s.io/structured-merge-diff/v4 v4.4.1
@@ -60,7 +59,6 @@ require (
 	github.com/go-openapi/swag/yamlutils v0.26.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/google/btree v1.1.3 // indirect
 	github.com/google/cel-go v0.26.0 // indirect
 	github.com/google/gnostic-models v0.7.1 // indirect
 	github.com/google/pprof v0.0.0-20260115054156-294ebfa9ad83 // indirect
