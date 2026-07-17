@@ -14,6 +14,8 @@ on:
     tags: [ 'v*.*.*' ]
   pull_request:
    branches: [ "main" ]
+  # Allow the workflow to be triggered manually, e.g. to re-publish a tag.
+  workflow_dispatch:
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -60,7 +62,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action

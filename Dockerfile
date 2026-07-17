@@ -9,7 +9,7 @@ WORKDIR /workspace
 ENV GO111MODULE=on
 ENV TEST_ASSET_PATH=/_out/kubebuilder/bin
 
-RUN apk update && apk add --no-cache git bash curl g++
+RUN apt-get update && apt-get install -y --no-install-recommends git bash curl g++ && rm -rf /var/lib/apt/lists/*
 
 ARG TEST_ZONE_NAME
 COPY Makefile Makefile
