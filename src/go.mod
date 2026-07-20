@@ -19,7 +19,7 @@ replace (
 	k8s.io/apiserver => k8s.io/apiserver v0.36.2
 	k8s.io/client-go => k8s.io/client-go v0.36.2
 	k8s.io/component-base => k8s.io/component-base v0.36.2
-	sigs.k8s.io/controller-runtime => sigs.k8s.io/controller-runtime v0.20.2
+	sigs.k8s.io/controller-runtime => sigs.k8s.io/controller-runtime v0.24.1
 
 	// Crucial: Forces the structured-merge-diff type converter back to v4 signatures
 	sigs.k8s.io/structured-merge-diff/v4 => sigs.k8s.io/structured-merge-diff/v4 v4.4.1
